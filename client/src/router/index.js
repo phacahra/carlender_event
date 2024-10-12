@@ -1,80 +1,23 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router';
+import CalendarIndex from '@/components/calendar/CalendarIndex.vue'; // Ensure correct casing
+import EventList from '@/components/Event/EventList.vue';
+import CreateEvent from '@/components/Event/createEvent.vue';
+import NotificationList from '@/components/NotificationList/NotificationList.vue';
+import Settings from '@/components/util/AppSettings.vue';
+import ShowEvent from '@/components/Event/ShowEvent.vue';
 
-import UserIndex from '@/components/User/index'
-import UserEdit from '@/components/User/EditUser'
-import UserCreate from '@/components/User/CreateUser'
-import UserShow from '@/components/User/ShowUser'
-import Login from '@/components/Login'
+const routes = [
+  { path: '/calendar', name: 'calendar', component: CalendarIndex },
+  { path: '/events', name: 'events', component: EventList },
+  { path: '/create', name: 'CreateEvent', component: CreateEvent },
+  { path: '/notifications', name: 'NotificationList', component: NotificationList },
+  { path: '/settings', name: 'settings', component: Settings },
+  { path: '/events/:eventId', name: 'ShowEvent', component: ShowEvent },
+];
 
-import CommentIndex from '@/components/Comments/index' 
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+});
 
-import BlogIndex from '@/components/Blogs/index'
-import BlogCreate from '@/components/Blogs/CreateBlog'
-import BlogShow from '@/components/Blogs/ShowBlog'
-import BlogEdit from '@/components/Blogs/EditBlog'
-
-import Upload from '@/components/Util/Upload'
-
-Vue.use(Router)
-
-export default new Router({
-  mode: 'history',
-  routes: [
-    {
-      path: '/users',
-      name: 'users',
-      component: UserIndex
-    },
-    {
-      path: '/user/edit/:userId',
-      name: 'user-edit',
-      component: UserEdit
-    },
-    {
-      path: '/user/create',
-      name: 'user-create',
-      component: UserCreate
-    },
-    {
-      path: '/user/:userId',
-      name: 'user',
-      component: UserShow
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: Login
-    },
-    {
-      path: '/blogs',
-      name: 'blogs',
-      component: BlogIndex
-    },
-    {
-      path: '/blog/create',
-      name: 'blog-create',
-      component: BlogCreate
-    },
-    {
-      path: '/blog/edit/:blogId',
-      name: 'blog-edit',
-      component: BlogEdit
-    },
-    {
-      path: '/blog/:blogId',
-      name: 'blog',
-      component: BlogShow
-    },
-    {
-      path: '/comments',
-      name: 'comments',
-      component: CommentIndex
-    },
-    {
-      path: '/upload',
-      name: 'upload',
-      component: Upload
-    },
-  ]
-})
+export default router;

@@ -1,28 +1,17 @@
-let express = require('express');
-// import body parser
-let bodyParser = require('body-parser');
-const cors = require('cors');
-const { sequelize } = require('./models');
-const config = require('./config/config');
-
-
+const express = require('express');
 const app = express();
-// use body parser middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
-app.use('/assets', express.static('public'));
+const bodyParser = require('body-parser');
+const routes = require('./routes/index'); // Make sure this points to your routes file
+const cors = require('cors');
 
-// import routes
+app.use(cors()); // Enable CORS for all requests
+app.use(bodyParser.json()); // Parse JSON bodies
+app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded bodies
 
-require('./userPassport');
-require('./routes')(app);
+// Use routes
+app.use('/api', routes); // Use API prefix
 
-
-let port = config.port;
-
-sequelize.sync({ force: false }).then(() => {
-    app.listen(port, function () {
-        console.log('Server running on ' + port)
-    })
-})
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});

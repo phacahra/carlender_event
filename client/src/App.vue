@@ -1,33 +1,21 @@
 <template>
   <div id="app">
-    <navigationBar/>
-    <router-view/>
+    <AppHeader />
+    <router-view />
   </div>
 </template>
 
 <script>
+import AppHeader from '@/components/util/AppHeader.vue';
+
 export default {
-  name: 'App'
-}
+  name: 'App',
+  components: {
+    AppHeader,
+  },
+};
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  /* text-align: center; */
-  color: #2c3e50;
-  /* margin-top: 60px; */
-}
-/* Fade transition */
-.fade-enter, .fade-leave-to {
- opacity: 0;
-}
-.fade-enter-active, .fade-leave-active {
- transition: opacity 2.5s;
-}
-.fade-enter-to {
- opacity: 1;
-}
+/* Add any global styles here */
 </style>

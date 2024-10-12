@@ -4,22 +4,30 @@
   "description": "nodejs vuejs webblog server (backend)",
   "main": "src/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/app.js",
+    "dev": "nodemon server/app.js"
   },
   "author": "Nattapon Kumyaito",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.7.7",
     "bcrypt-nodejs": "^0.0.3",
-    "bluebird": "^3.5.3",
-    "body-parser": "^1.20.2",
+    "bluebird": "^3.7.2",
+    "body-parser": "^1.20.3",
     "cors": "^2.8.5",
-    "express": "^4.19.2",
+    "express": "^4.21.1",
     "joi": "^13.7.0",
-    "jsonwebtoken": "^8.4.0",
+    "jsonwebtoken": "^8.5.1",
     "multer": "^1.4.5-lts.1",
-    "passport": "^0.4.0",
+    "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
-    "sequelize": "^6.37.3",
-    "sqlite3": "^5.1.7"
+    "passport-local": "^1.0.0",
+    "sequelize": "^6.37.4",
+    "sqlite3": "^5.1.7",
+    "vue-cal": "^4.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }

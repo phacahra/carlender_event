@@ -1,26 +1,67 @@
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
-const config = require('../config/config');
-const db = {};
+const sequelize = require('../config/dbConfig');
+const { DataTypes } = require('sequelize');
 
-const sequelize = new Sequelize (
-    config.db.database,
-    config.db.user,
-    config.db.password,
-    config.db.options
-)
+// โมเดล User
+const User = sequelize.define('User', {
+    id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true
+    },
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
+    }
+});
 
-fs.readdirSync(__dirname)
-    .filter((file) =>
-        file !== 'index.js'
-    )
-    .forEach((file) => {
-        const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
-        db[model.name] = model;
-    });
+// โมเดล Event
+const Event = sequelize.define('Event', {
+    id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true
+    },
+    title: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    description: {
+        type: DataTypes.TEXT,
+        allowNull: true
+    },
+    startTime: {
+        type: DataTypes.DATE,
+        allowNull: false
+    },
+    endTime: {
+        type: DataTypes.DATE,
+        allowNull: false
+    },
+    userId: {
+        type: DataTypes.UUID,
+        allowNull: false
+    },
+    image: {
+        type: DataTypes.STRING,
+        allowNull: true
+    }
+});
 
-db.Sequelize = Sequelize;
-db.sequelize = sequelize;
+// สร้างความสัมพันธ์
+User.hasMany(Event, { foreignKey: 'userId', as: 'events' });
+Event.belongsTo(User, { foreignKey: 'userId', as: 'creator' });
 
-module.exports = db;
+sequelize.sync({ force: true }) // Use force: true only during development
+    .then(() => console.log('Database synced successfully'))
+    .catch(err => console.log('Error syncing database:', err));
+
+module.exports = {
+    sequelize,
+    User,
+    Event,
+};
